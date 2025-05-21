@@ -1,0 +1,15 @@
+tools:
+  - class_name: "verl.tools.exec_tool.ExecTool"
+    config: {}
+    tool_schema:
+      type: "function"
+      function:
+        name: "evaluate"
+        description: "Evaluate a Python expression (including arithmetic, list indexing, slicing, and other pure expressions) and return its result."
+        parameters:
+          type: "object"
+          properties:
+            expression:
+              type: "string"
+              description: "A Python expression to evaluate, e.g. '2+3*4' or '[1,2,3][1:3]'"
+          required: ["expression"]

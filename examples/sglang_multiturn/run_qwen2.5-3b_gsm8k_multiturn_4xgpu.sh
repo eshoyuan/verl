@@ -3,7 +3,9 @@
 
 set -x
 export HYDRA_FULL_ERROR=1
+export CUDA_VISIBLE_DEVICES=4,5,6,7
 ulimit -n 65535
+ray stop --force && ray start --head
 
 PROJECT_DIR="$(pwd)"
 CONFIG_PATH="$PROJECT_DIR/examples/sglang_multiturn/config"
@@ -14,7 +16,7 @@ python3 -m verl.trainer.main_ppo \
     algorithm.adv_estimator=grpo \
     data.train_batch_size=256 \
     data.max_prompt_length=1024 \
-    data.max_response_length=1024 \
+    data.max_response_length=4096 \
     data.filter_overlong_prompts=True \
     data.truncation='error' \
     data.return_raw_chat=True \
@@ -41,7 +43,7 @@ python3 -m verl.trainer.main_ppo \
     trainer.critic_warmup=0 \
     trainer.logger=['console','wandb'] \
     trainer.project_name='gsm8k_async_rl' \
-    trainer.experiment_name='qwen2.5-3b_function_rm-gsm8k-async-sgl-multi-w-tool-verify-n16-4cards' \
+    trainer.experiment_name='qwen2.5-3b_function_rm-gsm8k-async-sgl-multi-w-tool-verify-n16-4cards-4096' \
     trainer.n_gpus_per_node=4 \
     trainer.nnodes=1 \
     trainer.save_freq=-1 \
